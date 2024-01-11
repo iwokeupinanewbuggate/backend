@@ -1,10 +1,11 @@
 const express = require('express');
 const router = require("./Routes/userRouter.js");
 const routes = require("./Routes/factRouter.js")
+const connect = require("./database/db.js")
+
 const port = 8080
 const app = express();
 
-const connect = require("../backend/database/db.js")
 const cors = require("cors")
 app.use(cors())
 app.use(express.json());
