@@ -1,6 +1,6 @@
 const Router = require("express")
 const bcrypt = require("bcrypt")
-const { getAllUser, createUser, checkLogin, getOneUser } = require("../Controller/userController.js")
+const { getAllUser, createUser, checkLogin, getOneUser, editUser } = require("../Controller/userController.js")
 const { userModel } = require("../database/schema/userSchema.js")
 const router = Router()
 
@@ -34,6 +34,7 @@ router.get("/users", getAllUser);
 router.get("/user/:userId", getOneUser)
 router.post("/signup", validateEmail, createUser);
 router.post("/login", validatePass, checkLogin);
+router.put("/user/edit/:userId", editUser)
 
 
 module.exports = router

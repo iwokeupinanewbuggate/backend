@@ -5,8 +5,8 @@ const userschema = new Schema({
     password: String,
     email: String,
     age: Number,
-    // location: String,
-    // pic: String
+    imageUrl: { type: String, default: "" },
+    aboutMe: { type: String, default: "" }
 })
 const userModel = model("User", userschema)
 

@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt")
 const { userModel } = require("../database/schema/userSchema")
-const { use } = require("../Routes/userRouter")
+
 
 
 const getAllUser = async (req, res) => {
@@ -30,7 +30,7 @@ const createUser = async (req, res) => {
         const user = await userModel.create(info);
         console.log(password)
         console.log(hashedPassword)
-        res.status(200).send("Account successfully created" + " " + "Youre id is " + " " + user._id)
+        res.status(200).send(user)
     } catch (err) {
         res.status(500).send("Server error")
     }
@@ -47,5 +47,21 @@ const checkLogin = async (req, res) => {
     }
 }
 
+const editUser = async (req, res) => {
+    const aboutMe = req.body.aboutMe
+    const { id, username, age, imageUrl } = req.body
+    try {
+        const usersInfo = await userModel.findOne({ userId: id })
+        if (usersInfo) {
+            await userModel.findByIdAndUpdate(id, {
+                aboutMe: aboutMe, username: username, imageUrl: imageUrl, age: age
+            })
+            res.status(200).send("Successfully uptaded")
+        } else { res.status(404).send("User not found") }
+    }
+    catch (err) {
+        res.status(500).send("Server error")
+    }
+}
 
-module.exports = { getAllUser, createUser, checkLogin, getOneUser }
+module.exports = { getAllUser, createUser, checkLogin, getOneUser, editUser }
