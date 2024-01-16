@@ -48,15 +48,14 @@ const checkLogin = async (req, res) => {
 }
 
 const editUser = async (req, res) => {
-    const aboutMe = req.body.aboutMe
-    const { id, username, age, imageUrl } = req.body
+    const { username, age, imageUrl, aboutMe } = req.body
     try {
-        const usersInfo = await userModel.findOne({ userId: id })
+        const usersInfo = await userModel.findById(req.params.userId)
         if (usersInfo) {
-            await userModel.findByIdAndUpdate(id, {
+            await userModel.findByIdAndUpdate(req.params.userId, {
                 aboutMe: aboutMe, username: username, imageUrl: imageUrl, age: age
             })
-            res.status(200).send("Successfully uptaded")
+            res.status(200).send(usersInfo)
         } else { res.status(404).send("User not found") }
     }
     catch (err) {
